@@ -1,0 +1,9 @@
+body {
+    font-family: 'Heebo', Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+.jumbotron {
+    border-radius: 0;
+}
