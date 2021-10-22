@@ -1,3 +1,7 @@
+:root {
+    --defaultborderradius: .5rem;
+}
+
 body {
     font-family: 'Heebo', Arial, Helvetica, sans-serif;
     font-size: 20px;
@@ -6,4 +10,28 @@ body {
 
 .jumbotron {
     border-radius: 0;
+}
+
+.card {
+    margin: 0 0 20px 0;
+    border: 2px solid black;
+    border-radius: var(--defaultborderradius);
+    appearance: none;
+}
+
+.card-body {
+    padding: 3%;
+    background-color: lightgrey;
+}
+
+.form-input {
+    border-radius: var(--defaultborderradius);
+}
+
+.submit-btn, .clear-btn {
+    border-radius: var(--defaultborderradius);
+}
+
+.submit-btn:hover, .clear-btn:hover {
+    background-color: rgb(180, 180, 180);
 }
