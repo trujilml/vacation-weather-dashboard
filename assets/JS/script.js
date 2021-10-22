@@ -3,8 +3,7 @@ var todayEl = document.querySelector("#today");
 var todayTime = moment();
 
 todayEl.textContent = todayTime.format("dddd, MMMM Do YYYY, h:mm:ss a");
-
-// const APIKey = "9ec33c9f56aaa842560b13552e741183";
+//add const api key when ready, let tas know if this happens again
 var city = document.querySelector("#city");
 
 
