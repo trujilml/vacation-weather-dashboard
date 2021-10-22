@@ -4,7 +4,7 @@ var todayTime = moment();
 
 todayEl.textContent = todayTime.format("dddd, MMMM Do YYYY, h:mm:ss a");
 
-const APIKey = "9ec33c9f56aaa842560b13552e741183";
+// const APIKey = "9ec33c9f56aaa842560b13552e741183";
 var city = document.querySelector("#city");
 
 
