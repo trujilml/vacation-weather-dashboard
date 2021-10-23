@@ -21,59 +21,49 @@
     <p id = "today" class="lead d-flex justify-content-center"></p>
 </header>
 
-<main class = "flex-row justify-space-between">
-    <div class="col-12 col-md-4">
+<main class = "flex-row">
+    <div class="col-lg-12 col-md-6">
         <div class="card">
             <h3 class="card-header">Search for your vacation city:</h3>
-            <form id="search-form" class="card-body">
+            <form id="search-form" class="card-body d-flex justify-content-center">
             <input name="city" id="city" type="text" class="form-input" placeholder="Find your city..."/>
             <button type="submit" class="submit-btn" title="Find out the forecast for your upcoming vacation destination!"><i class="fas fa-search"></i>Search</button>
             </form>
         </div>
-
-            <div class="card">
+            <div class="card-body d-flex justify-content-center mb-5">
             <button type="button" class="clear-btn" id="clear-search" title="Clear your city search list and find more destinations all over again!"><i class="fa-solid fa-eraser"></i>Clear City Search List</button>
             <form id="history" class="bg-dark text-light"></form> 
             </div>
         </div>
 
-        <div class="col-8">
+        <div class="col-lg-12">
             <div class="row mr-0">
-                <div class="col-12 border border-dark rounded m-5">
-                    <div class="row">
-                        <div class="col-12">
-                            <span id="city" class="city-name align-center"></span>
-                            <!-- <img id="current" src="placeholder" alt="" /> -->
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <p id="temperatue"></p>
-                            </div>
-                            <div class="col-12">
+                <div class="col-lg-12 col-md-6 border border-dark rounded d-none" id="weathernow"> 
+                    <div class="card-body">
+                            <span id="city-name" class="city-name align-center"></span>
+                            <img id="image" alt="">
+                                <p id="temperature"></p>
                                 <p id="UV-index"></p>
-                            </div>
-                            <div class="col-12">
                                 <p id="humidity"></p>
-                            </div>
-                            <div class="col-12">
                                 <p id="wind-speed"></p>
+                                </div>
                             </div>
-                        <div class="row">
+                         </div>
+                        <div class="row d-none" id="fivedayboard">
                             <div class="col-12 d-flex justify-content-center bg-dark text-light rounded">
                                  <h2>Five Day Forecast</h2>
                             </div>
                         </div>
                         <div class="row">
-                        <div class="col forecast bg-white text-dark rounded"></div>
-                        <div class="col forecast bg-white text-dark rounded"></div>
-                        <div class="col forecast bg-white text-dark rounded"></div>
-                        <div class="col forecast bg-white text-dark rounded"></div>
-                        <div class="col forecast bg-white text-dark rounded"></div>
+                        <div class="col forecast bg-white text-dark border border-dark rounded"></div>
+                        <div class="col forecast bg-white text-dark border border-dark rounded"></div>
+                        <div class="col forecast bg-white text-dark border border-dark rounded"></div>
+                        <div class="col forecast bg-white text-dark border border-dark rounded"></div>
+                        <div class="col forecast bg-white text-dark border border-dark rounded"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 </main>
 
 
