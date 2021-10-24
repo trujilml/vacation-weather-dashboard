@@ -15,19 +15,20 @@ function retrieve() {
     var windSpeed = document.getElementById("#wind-speed"); 
     var currentUvIndex = document.getElementById("#UV-index");
 
+    var searchIt = document.getElementById("#search");
+    let searchLog = JSON.parse(localStorage.getItem("search")) || [];
+    var searchHistory = document.getElementById("#history");
 
+    var fiveDayForecast = document.getElementById("#fivedayboard");
 
-//const APIKey = "";
-
-
-
+//const apiKey = "";
 
 //API key will be implemented when project is nearly done - in order to not get github guardian alerts on my phone multiple times per day
 //wait till next week to turn in - for now, let's work on
 
 function weather(city) {
 
-    let url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+    let url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
 
     axios.get(url).then (function(response) {
         console.log(response);
@@ -52,9 +53,49 @@ function weather(city) {
         let latitude = response.data.coord.lat;
         let longitude = response.data.coord.lon;
 
+        let uvIndexUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&cnt=1";
+
+        axios.get(uvIndexUrl).then (function(response) {
+            let uV = document.createElement("span");
+
+            if (response.data[0].value < 4) {
+                uV.setAttribute("class", "badge badge-success");
+            }
+            else if (response.data[0].value < 8) {
+                uV.setAttribute("class", "badge badge-warning");
+            }
+            else {
+                uV.setAttribute("class", "badge badge-danger");
+            }
+        console.log(response.data[0].value);
+        currentUvIndex.innerHtml = response.data[0].value;
+        currentUvIndex.innerHtml = "UV Index: ";
+        currentUvIndex.append(uV);
+    });
+
+    let cityInfo = response.data.id;
+    let dailyForecastUrl = "https://api.openweathermap.org/data/2.5/forecast?id=" + cityInfo + "&appid=" + apiKey;
+    axios.get(dailyForecastUrl).then (function(response) {
+        console.log(response);
+
+        fiveDayForecast.classList.remove("d-none");
+
+        const forecastLong = document.querySelectorAll(".forecast");
+        for (var i = 0; i < forecastLong.length; i++) {
+
+        }
+});
+})
+
+ 
+function k2f(K) {
+    return Math.floor((K - 273.15) * 1.8 + 32);
+}
+
+function searchHistory () {
+
+}
 
 
-
-    })
 }
 }
