@@ -24,6 +24,9 @@ function retrieveThis() {
     let searchLog = JSON.parse(localStorage.getItem("search")) || [];
 
 
+    // const apiKey = "";
+    
+
 //API key will be implemented when project is nearly done - in order to not get github guardian alerts on my phone multiple times per day
 //wait till next week to turn in - for now, let's work on
 
@@ -36,11 +39,11 @@ function weatherRetrieval(city) {
 
         weatherToday.classList.remove("d-none");
 
-        var todayDate = new Date(reponse.data.dt * 1000);
+        var todayDate = new Date(response.data.dt * 1000);
         var day = todayDate.getDate();
         var month = todayDate.getMonth() + 1;
         var year = todayDate.getFullYear();
-        cityName.innerHTML = response.data.name + "(" + month + "/" + day + "/" + year + ")";
+        cityName.innerHTML = response.data.name + " (" + month + "/" + day + "/" + year + ") ";
 
         let picOfWeather = response.data.weather[0].icon;
         weatherPicture.setAttribute("src", "https://openweathermap.org/img/wn/" + picOfWeather + "@2x.png");
@@ -76,13 +79,12 @@ function weatherRetrieval(city) {
 
     let cityInfo = response.data.id;
     let dailyForecastUrl = "https://api.openweathermap.org/data/2.5/forecast?id=" + cityInfo + "&appid=" + apiKey;
-    axios.get(dailyForecastUrl).then (function(response) {
-        console.log(response);
-
+    axios.get(dailyForecastUrl)
+    .then(function (response) {
         fiveDayForecast.classList.remove("d-none");
 
         const forecastLong = document.querySelectorAll(".forecast");
-        for (var i = 0; i < forecastLong.length; i++) {
+        for (i = 0; i < forecastLong.length; i++) {
             forecastLong[i].innerHTML = "";
             var forecastIndex = i * 8 + 4;
             var forecastDate = new Data (response.data.list[forecastIndex].dt * 1000);
@@ -133,7 +135,7 @@ function k2f(K) {
 
 function retrieveSearchLog() {
  searchHistory.innerHTML = "";
- for (var i = 0; i < searchHistory.length; i++) {
+ for (let i = 0; i < searchHistory.length; i++) {
      const pastSearchItem = document.createElement("input");
      pastSearchItem.searchAttribute("type","text");
      pastSearchItem.searchAttribute("readonly", true);
