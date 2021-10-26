@@ -7,6 +7,7 @@ todayEl.textContent = todayTime.format("dddd, MMMM Do YYYY, h:mm:ss a");
 
 var searchIt = $(".search-btn");
 
+
 var apiKey = "";
 // //API key will be implemented when project is nearly done - in order to not get github guardian alerts on my phone multiple times per day
 // //wait till next week to turn in - for now, let's work on
@@ -20,11 +21,13 @@ for (let i = 0; i < localStorage.length; i++) {
 
 var cityCountTotal = 0;
 
-var searchForm = $(".search-form").val;
+searchIt.click(function () {
 
-let searchedForecastUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + searchForm + "&appid=" + apiKey;
+    var searchForm = $(".search-form").val();
 
-let dailyForecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchForm + "&appid=" + apiKey;
+    var searchedForecastUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + searchForm + "&appid=" + apiKey + "&units=imperial";
+
+    var dailyForecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchForm + "&appid=" + apiKey + "&units=imperial";
 
 
 
@@ -33,7 +36,7 @@ if (searchForm == "") {
 } $.ajax({
     url: searchedForecastUrl,
     method: "GET"
-}).then (function (response) {
+}).then(function (response) {
     var cityName = $(".list-group").addClass("list-group-item");
     cityName.append("<li>" + response.name + "</li>");
 
@@ -52,12 +55,15 @@ if (searchForm == "") {
 
     var currentTemperature = currentWeatherNow.append("<p>");
     currentWeatherNow.append(currentTemperature);
-    currentTemperature.append("<p>" + "Temperature: " + response.main.temp + "&#176" + "</p>");
+    currentTemperature.append("<p>" + "Temperature: " + response.main.temp + "\u2109" + "</p>");
     currentTemperature.append("<p>" + "Humidity: " + response.main.humidity + "%" + "</p>");
     currentTemperature.append("<p>" + "Wind Speed: " + response.wind.speed + "MPH" + "</p>");
 
 
-    var uvIndexUrl = "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "${response.coord.lat}" + "&lon="+ "${response.coord.lon}" + "&cnt=1";
+  //var uvIndexUrl  = `https://api.openweathermap.org/data/2.5/uvi?appid= "must be your api key default only"
+  //&lat=${response.coord.lat}&lon=${response.coord.lon}`;
+
+ 
 
     $.ajax({
         url: uvIndexUrl,
@@ -82,93 +88,34 @@ if (searchForm == "") {
 
 });
 
+$.ajax({
+    url: dailyForecastUrl,
+    method: "GET"
+}).then(function (response) {
+        
+        var days = [];
+        var fiveDayForecast = $(".fivedayforecast").addClass("card-body");
+        var fiveDayInfo = $(".fiveday-oneday").addClass("card-text");
+        fiveDayInfo.empty();
+
+        days.forEach(function (i) {
+            var fiveDayDate = new Date(response.list[i].dt * 1000);
+            fiveDayDate = fiveDayDate.toLocaleDateString("en-US");
+
+        fiveDayInfo.append("<div class=fiveDayCurrent>" + "<p>" + fiveDayDate + "</p>" + 
+        '<img src="https://openweathermap.org/img/wn/${response.list[i].weather[0].icon}@2x.png">' + "<p>" + "Temperature: " +
+        response.list[i].main.temp + "</p>" + "<p>" + "Humidity: " + response.list[i].main.humidity + "%" + "</p>" + "</div>");
+
+        })
+    });
+})
+
+
+var clearIt = $(".clear-btn").on("click", function() {
+    localSearch[cityCountTotal].length = 0;
+    $("list-" + cityCountTotal).empty();
+});
 
 
 
-ajax.get(dailyForecastUrl)
-    .then(function (response) {
-        console.log(response);
-    })
-
-var clearIt = $(".clear-btn");
-
-localStorage.localSearch.clear();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    
-//     axios.get(dailyForecastUrl)
-//     .then(function (response) {
-//         fiveDayForecast.classList.remove("d-none");
-
-//         const forecastLong = document.querySelectorAll(".forecast");
-//         for (i = 0; i < forecastLong.length; i++) {
-//             forecastLong[i].innerHTML = "";
-//             var forecastIndex = i * 8 + 4;
-//             var forecastDate = new Data (response.data.list[forecastIndex].dt * 1000);
-//             var forecastDay = forecastDate.getDate();
-//             var forecastMonth = forecastDate.getMonth() + 1;
-//             var forecastYear = forecaseDate.getFullYear();
-//             var currentForecastDate = document.createElement("p");
-//             currentForecastDate.setAttribute("class","mt-3 mb-0 current-forecast-date");
-//             currentForecastDate.innerHTML = forecastMonth + "/" + forecastDay + "/" + forecastYear;
-//             forecastLong[i].append(currentForecastDate);
-
-//             //icons representing current weather
-//             var forecastWeatherImage = document.createElement("img");
-//             forecastWeatherImage.setAttribute("src", "https://openweathermap.org/img/wn/" + response.data.list[forecastIndex].weather[0].icon + "@2x.png");
-//             forecastWeatherImage.setAttribute("alt", response.data.list[forecastIndex].weather[0].description);
-//             forecastLong[i].append(forecastWeatherImage);
-
-//             var forecastTemperature = document.createElement("p");
-//             forecastTemperature.innerHTML = "Temperature: " + k2f(response.data.list[forecastIndex].main.temp) + "&#176";
-//             forecastLong[i].append(forecastTemperature);
-
-//             var forecastHumidity = document.createElement("p");
-//             forecastHumidity.innerHTML = "Humidity: " + (response.data.list[forecastIndex].main.humidity) + "%";
-//             forecastLong[i].append(forecastHumidity);
-//         }
-//     })
-// });
-// }
-
-
-
-
-
-// function retrieveSearchLog() {
-//  searchHistory.innerHTML = "";
-//  for (let i = 0; i < searchHistory.length; i++) {
-//      const pastSearchItem = document.createElement("input");
-//      pastSearchItem.searchAttribute("type","text");
-//      pastSearchItem.searchAttribute("readonly", true);
-//      pastSearchItem.searchAttribute("class", "form-control d-block bg-white");
-//      pastSearchItem.searchAttribute("value", searchLog[i]);
-//      pastSearchItem.addEventListener("click", function(){
-//          weatherRetrieval(pastSearchItem.value);
-//      })
-//      searchHistory.append(pastSearchItem);
-//     }
-// }
-
-// retrieveSearchLog();
 

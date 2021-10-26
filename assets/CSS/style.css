@@ -1,5 +1,6 @@
 :root {
     --defaultborderradius: .5rem;
+    --standardwidth: 20rem;
 }
 
 body {
@@ -14,9 +15,9 @@ body {
 
 .card {
     margin: 0 0 20px 0;
-    border: 2px solid black;
     border-radius: var(--defaultborderradius);
     appearance: none;
+    width: var(--standardwidth);
 }
 
 .card-header {
@@ -26,15 +27,22 @@ body {
 
 .card-body {
     background-color: lightgrey;
-    border: 2px solid black;
+
+}
+
+ul {
+    list-style: none;
+    width: var(--standardwidth);
+}
+
+li {
+    text-align: center;
     border-radius: var(--defaultborderradius);
 }
 
 .form-input {
     border-radius: var(--defaultborderradius);
 }
-
-
 
 .search-btn, .clear-btn {
     border-radius: var(--defaultborderradius);
