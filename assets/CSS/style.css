@@ -36,10 +36,10 @@ body {
 
 
 
-.submit-btn, .clear-btn {
+.search-btn, .clear-btn {
     border-radius: var(--defaultborderradius);
 }
 
-.submit-btn:hover, .clear-btn:hover {
+.search-btn:hover, .clear-btn:hover {
     background-color: rgb(180, 180, 180);
 }
