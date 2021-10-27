@@ -1,6 +1,5 @@
 :root {
     --defaultborderradius: .5rem;
-    --standardwidth: 20rem;
 }
 
 body {
@@ -17,7 +16,6 @@ body {
     margin: 0 0 20px 0;
     border-radius: var(--defaultborderradius);
     appearance: none;
-    width: var(--standardwidth);
 }
 
 .card-header {
@@ -32,12 +30,12 @@ body {
 
 ul {
     list-style: none;
-    width: var(--standardwidth);
 }
 
 li {
     text-align: center;
     border-radius: var(--defaultborderradius);
+    list-style: none;
 }
 
 .form-input {

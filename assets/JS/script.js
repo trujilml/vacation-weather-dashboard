@@ -10,9 +10,10 @@ var searchIt = $(".search-btn");
 
 var apiKey = "";
 // //API key will be implemented when project is nearly done - in order to not get github guardian alerts on my phone multiple times per day
-// //wait till next week to turn in - for now, let's work on
+// //wait till sunday to turn in - for now, let's work on the project and finish it up
 
-for (let i = 0; i < localStorage.length; i++) {
+for (var i = 0; i < localStorage.length; i++) {
+
     var city = localStorage.getItem(i);
     var cityName = $(".list-group").addClass("list-group-item");
 
@@ -37,32 +38,32 @@ if (searchForm == "") {
     url: searchedForecastUrl,
     method: "GET"
 }).then(function (response) {
-    var cityName = $(".list-group").addClass("list-group-item");
+    var cityName = $(".list-group").addClass("list-group-item").removeClass("d-none");
     cityName.append("<li>" + response.name + "</li>");
 
-    var localSearch = localStorage.setItem(cityCountTotal, response.name);
-    cityCountTotal = cityCountTotal + 1;
+    var local = localStorage.setItem(cityCountTotal, response.name);
+    cityCountTotal += 1;
 
     var currentWeatherDisplay = $(".weather-card").append("<div>").addClass("card-holder");
     currentWeatherDisplay.empty();
-    var currentWeatherNow = currentWeatherDisplay.append("<p>");
+    var currentWeatherNow = currentWeatherDisplay.append("<h2>" + response.name + "</h2>");
     currentWeatherDisplay.append(currentWeatherNow);
 
 
+
     var todayDate = new Date(response.dt * 1000);
-    currentWeatherNow.append(response.name + " " + todayDate.toLocaleDateString("en-US"));
-    currentWeatherNow.append('<img src="https://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png">');
+    currentWeatherNow.append(" " + todayDate.toLocaleDateString("en-US"));
+    currentWeatherNow.append(`<img src="https://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png">`);
 
     var currentTemperature = currentWeatherNow.append("<p>");
+
     currentWeatherNow.append(currentTemperature);
     currentTemperature.append("<p>" + "Temperature: " + response.main.temp + "\u2109" + "</p>");
     currentTemperature.append("<p>" + "Humidity: " + response.main.humidity + "%" + "</p>");
     currentTemperature.append("<p>" + "Wind Speed: " + response.wind.speed + "MPH" + "</p>");
 
 
-  //var uvIndexUrl  = `https://api.openweathermap.org/data/2.5/uvi?appid= "must be your api key default only"
-  //&lat=${response.coord.lat}&lon=${response.coord.lon}`;
-
+   var uvIndexUrl  = `https://api.openweathermap.org/data/2.5/uvi?appid=` + apiKey + `&lat=${response.coord.lat}` + `&lon=${response.coord.lon}`;
  
 
     $.ajax({
@@ -70,19 +71,19 @@ if (searchForm == "") {
         method: "GET"
     }).then (function(response) {
         var currentUVIndex = currentTemperature.append("<p>" + "UV Index: " + response.value + "</p>");
+        currentUVIndex.addClass("UV");
+        currentTemperature.append(currentUVIndex);
 
           if (response.value < 4) {
-            currentUVIndex.setAttribute("class", "badge badge-success");
+            currentUVIndex.setAttribute("<p>", "badge badge-success", "</p>");
             }
           else if (response.value < 8) {
-               currentUVIndex.setAttribute("class", "badge badge-warning");
+            currentUVIndex.setAttribute("<p>", "badge badge-warning", "</p>");
             }
             else {
-                currentUVIndex.setAttribute("class", "badge badge-danger");
+            currentUVIndex.setAttribute("<p>", "badge badge-danger", "</p>");
             }
 
-            currentUVIndex.addClass("UV");
-            currentTemperature.append(currentUVIndex);
     });
 
 
@@ -93,7 +94,7 @@ $.ajax({
     method: "GET"
 }).then(function (response) {
         
-        var days = [];
+        var days = [0, 8, 16, 24, 32];
         var fiveDayForecast = $(".fivedayforecast").addClass("card-body");
         var fiveDayInfo = $(".fiveday-oneday").addClass("card-text");
         fiveDayInfo.empty();
@@ -102,20 +103,21 @@ $.ajax({
             var fiveDayDate = new Date(response.list[i].dt * 1000);
             fiveDayDate = fiveDayDate.toLocaleDateString("en-US");
 
-        fiveDayInfo.append("<div class=fiveDayCurrent>" + "<p>" + fiveDayDate + "</p>" + 
-        '<img src="https://openweathermap.org/img/wn/${response.list[i].weather[0].icon}@2x.png">' + "<p>" + "Temperature: " +
-        response.list[i].main.temp + "</p>" + "<p>" + "Humidity: " + response.list[i].main.humidity + "%" + "</p>" + "</div>");
+        fiveDayInfo.append("<div class= fiveDayCurrent>" + "<h2>" + fiveDayDate + "</h2>" + 
+        `<img src="https://openweathermap.org/img/wn/${response.list[i].weather[0].icon}@2x.png">` + "<p>" + "Temperature: " +
+        response.list[i].main.temp + "\u2109" + "</p>" + "<p>" + "Wind Speed: " + response.list[i].wind.speed + "MPH" + "</p>" + 
+        "<p>" + "Humidity: " + response.list[i].main.humidity + "%" + "</p>" + "</div>");
 
         })
     });
 })
 
 
-var clearIt = $(".clear-btn").on("click", function() {
-    localSearch[cityCountTotal].length = 0;
-    $("list-" + cityCountTotal).empty();
-});
 
+//clear button 
+$(".clear-btn").on("click"), function() {
+ localStorage.setItem(cityCountTotal, "");
+ localStorage.setItem(response.name, "");
 
-
-
+ local.clear(cityCountTotal, response.name); 
+}
