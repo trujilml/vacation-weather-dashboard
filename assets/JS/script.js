@@ -7,20 +7,23 @@ todayEl.textContent = todayTime.format("dddd, MMMM Do YYYY, h:mm:ss a");
 
 var searchIt = $(".search-btn");
 
+var cityCountTotal = 0;
 
-var apiKey = "";
+var apiKey = "18794ed1b6c9a8fa486016da78db979e";
 // //API key will be implemented when project is nearly done - in order to not get github guardian alerts on my phone multiple times per day
 // //wait till sunday to turn in - for now, let's work on the project and finish it up
 
 for (var i = 0; i < localStorage.length; i++) {
-
+ 
     var city = localStorage.getItem(i);
-    var cityName = $(".list-group").addClass("list-group-item");
 
-    cityName.append("<li>" + city + "</li>");
+    if (city) {
+        var cityName = $(".list-group").addClass("list-group-item");
+        cityName.append("<li>" + city + "</li>");
+    }
+
 }
 
-var cityCountTotal = 0;
 
 searchIt.click(function () {
 
@@ -75,7 +78,7 @@ if (searchForm == "") {
         currentTemperature.append(currentUVIndex);
 
           if (response.value < 4) {
-            currentUVIndex.setAttribute("<p>", "badge badge-success", "</p>");
+            currentUVIndex.setAttribute("<p>", "badge badge-success", "</p>"); //classes can be implemented like css classes from calendar wordday schedule - favorable moderate severe
             }
           else if (response.value < 8) {
             currentUVIndex.setAttribute("<p>", "badge badge-warning", "</p>");
@@ -115,9 +118,10 @@ $.ajax({
 
 
 //clear button 
+//set for loop to consider clear function
 $(".clear-btn").on("click"), function() {
- localStorage.setItem(cityCountTotal, "");
- localStorage.setItem(response.name, "");
+ localStorage.getItem(cityCountTotal, "");
+ localStorage.getItem(response.name, "");
 
  local.clear(cityCountTotal, response.name); 
 }
