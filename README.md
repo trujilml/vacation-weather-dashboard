@@ -26,3 +26,7 @@ Bootstrap - implements modern design of the web application
 Axios - used to call url of OpenWeather One Call API
 Moment.js - implements visible current time format on the header
 OpenWeather One Call API - used to collect weather data from different locations
+
+
+## Further Development Notes
+* Alongside the current local storage of the cities that the user searches for, there will be the future implementation of a clear search function that allows for the user to clear their current search history in favor of looking for more cities of their future travel destination. 

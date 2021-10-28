@@ -52,8 +52,6 @@ if (searchForm == "") {
     var currentWeatherNow = currentWeatherDisplay.append("<h2>" + response.name + "</h2>");
     currentWeatherDisplay.append(currentWeatherNow);
 
-
-
     var todayDate = new Date(response.dt * 1000);
     currentWeatherNow.append(" " + todayDate.toLocaleDateString("en-US"));
     currentWeatherNow.append(`<img src="https://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png">`);
@@ -67,25 +65,31 @@ if (searchForm == "") {
 
 
    var uvIndexUrl  = `https://api.openweathermap.org/data/2.5/uvi?appid=` + apiKey + `&lat=${response.coord.lat}` + `&lon=${response.coord.lon}`;
- 
 
     $.ajax({
         url: uvIndexUrl,
         method: "GET"
     }).then (function(response) {
-        var currentUVIndex = currentTemperature.append("<p>" + "UV Index: " + response.value + "</p>");
-        currentUVIndex.addClass("UV");
+
+        console.log(uvIndexUrl);
+        console.log(response);
+
+        var currentUV = response.value;
+        var currentUVIndex = $(currentTemperature).append("<p>" + "UV Index: " + currentUV + "</p>");
+
+         if (currentUV < 4) {
+            currentUVIndex = $(currentTemperature).append("<h4>" + "Favorable weather conditions from the UV Index - Perfect weather to go out today!" + "</h4>").css({"background-color":"green", "color": "white"});
+         }
+         else if (currentUV < 8) {
+            currentUVIndex = $(currentTemperature).append("<h4>" + "Good weather to go out as stated by the UV Index - please wear proper sun protection if needed." + "</h4>").css({"background-color":"yellow", "color": "black"});
+         }
+         else {
+            currentUVIndex = $(currentTemperature).append("<h4>" + "Current weather conditions are poor as stated by the UV Index - reduce your outside time in the late morning/early afternoon and wear proper sun protection." + "</h4>").css({"background-color":"red", "color": "white"});
+         }
+
         currentTemperature.append(currentUVIndex);
 
-          if (response.value < 4) {
-            currentUVIndex.setAttribute("<p>", "badge badge-success", "</p>"); //classes can be implemented like css classes from calendar wordday schedule - favorable moderate severe
-            }
-          else if (response.value < 8) {
-            currentUVIndex.setAttribute("<p>", "badge badge-warning", "</p>");
-            }
-            else {
-            currentUVIndex.setAttribute("<p>", "badge badge-danger", "</p>");
-            }
+          
 
     });
 
@@ -115,13 +119,3 @@ $.ajax({
     });
 })
 
-
-
-//clear button 
-//set for loop to consider clear function
-$(".clear-btn").on("click"), function() {
- localStorage.getItem(cityCountTotal, "");
- localStorage.getItem(response.name, "");
-
- local.clear(cityCountTotal, response.name); 
-}
