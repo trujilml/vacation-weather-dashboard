@@ -9,7 +9,7 @@ var searchIt = $(".search-btn");
 
 var cityCountTotal = 0;
 
-var apiKey = "18794ed1b6c9a8fa486016da78db979e";
+var apiKey = "";
 // //API key will be implemented when project is nearly done - in order to not get github guardian alerts on my phone multiple times per day
 // //wait till sunday to turn in - for now, let's work on the project and finish it up
 
