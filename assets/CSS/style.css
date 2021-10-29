@@ -13,7 +13,6 @@ body {
 }
 
 .card {
-    margin: 0 0 20px 0;
     border-radius: var(--defaultborderradius);
     appearance: none;
 }
@@ -26,6 +25,16 @@ body {
 .card-body {
     background-color: lightgrey;
 
+}
+
+header a {
+    text-decoration: none;
+}
+
+header h1:hover {
+    color: lightgrey; 
+    opacity: 25%;
+    filter: invert(1);
 }
 
 ul {

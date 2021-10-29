@@ -44,6 +44,7 @@ if (searchForm == "") {
     var cityName = $(".list-group").addClass("list-group-item").removeClass("d-none");
     cityName.append("<li>" + response.name + "</li>");
 
+
     var local = localStorage.setItem(cityCountTotal, response.name);
     cityCountTotal += 1;
 
@@ -118,4 +119,3 @@ $.ajax({
         })
     });
 })
-
