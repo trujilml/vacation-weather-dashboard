@@ -4,14 +4,15 @@ var todayTime = moment();
 
 todayEl.textContent = todayTime.format("dddd, MMMM Do YYYY, h:mm:ss a");
 
-
+//implements start of search button feature
 var searchIt = $(".search-btn");
 
 var cityCountTotal = 0;
 
-var apiKey = "";
-// //API key will be implemented when project is nearly done - in order to not get github guardian alerts on my phone multiple times per day
-// //wait till sunday to turn in - for now, let's work on the project and finish it up
+//implemented api key from openweathermap one call api - will be removed later 
+var apiKey = "18794ed1b6c9a8fa486016da78db979e";
+
+//conducted local storage to retrieve cities and assists with local storage in search it function belowe
 
 for (var i = 0; i < localStorage.length; i++) {
  
@@ -29,12 +30,15 @@ searchIt.click(function () {
 
     var searchForm = $(".search-form").val();
 
+//retrieved url with api key and search form asset
+//for daily forecast
     var searchedForecastUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + searchForm + "&appid=" + apiKey + "&units=imperial";
 
+    //for five day weekly forecast
     var dailyForecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + searchForm + "&appid=" + apiKey + "&units=imperial";
 
 
-
+//searched current forecast - retrieves city name from search form, implements local storage, appends div and class for weather card display, current date, temperature, humidity and windspeed. uv index is below 
 if (searchForm == "") {
     console.log(searchForm);
 } $.ajax({
@@ -64,7 +68,7 @@ if (searchForm == "") {
     currentTemperature.append("<p>" + "Humidity: " + response.main.humidity + "%" + "</p>");
     currentTemperature.append("<p>" + "Wind Speed: " + response.wind.speed + "MPH" + "</p>");
 
-
+//uv index for current forecast is retrieved - includes api key, latitude and longitude of searched city form 
    var uvIndexUrl  = `https://api.openweathermap.org/data/2.5/uvi?appid=` + apiKey + `&lat=${response.coord.lat}` + `&lon=${response.coord.lon}`;
 
     $.ajax({
@@ -75,6 +79,7 @@ if (searchForm == "") {
         console.log(uvIndexUrl);
         console.log(response);
 
+        //from here, uv index status is displayed for the entire weather card with an appended message below the uv index recommending the user whether to enjoy the day or take protective measures for sun protection. 
         var currentUV = response.value;
         var currentUVIndex = $(currentTemperature).append("<p>" + "UV Index: " + currentUV + "</p>");
 
@@ -97,11 +102,13 @@ if (searchForm == "") {
 
 });
 
+//seperate function for weekly forecast retrieved by its respective url
 $.ajax({
     url: dailyForecastUrl,
     method: "GET"
 }).then(function (response) {
         
+    //retrieves next five dates and implements requirements for the temperature, wind speed and humidity
         var days = [0, 8, 16, 24, 32];
         var fiveDayForecast = $(".fivedayforecast").addClass("card-body");
         var fiveDayInfo = $(".fiveday-oneday").addClass("card-text");
